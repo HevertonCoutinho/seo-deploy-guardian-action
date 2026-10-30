@@ -5,7 +5,7 @@
 
 ---
 
-## 🚀 Como Usar no seu Pipeline
+## Como Usar no seu Pipeline
 
 Adicione este passo simples no seu arquivo `.github/workflows/deploy.yml`:
 
