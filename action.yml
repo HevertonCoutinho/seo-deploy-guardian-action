@@ -1,0 +1,52 @@
+name: 'SEO Deploy Guardian'
+description: 'Auditoria técnica de SEO preventiva em CI/CD. Bloqueia deploys com noindex acidental, canonical quebrado e falhas críticas.'
+author: 'Heverton Escudeiro'
+branding:
+  icon: 'shield'
+  color: 'blue'
+
+inputs:
+  api_url:
+    description: 'Endpoint da API do SEO Deploy Guardian'
+    required: false
+    default: 'https://seo-deploy-guardian.vercel.app/api/v1/validate'
+  api_key:
+    description: 'Chave de autenticação da API (opcional na versão beta)'
+    required: false
+  html_file:
+    description: 'Caminho para o arquivo HTML compilado no build (ex: dist/index.html)'
+    required: true
+  base_html_file:
+    description: 'Caminho para o arquivo HTML da branch base/produção (para modo Delta)'
+    required: false
+  analysis_mode:
+    description: 'Modo de análise: full ou delta'
+    required: false
+    default: 'full'
+  production_domain:
+    description: 'Domínio canônico oficial de produção (ex: https://loja.com.br)'
+    required: false
+  page_type:
+    description: 'Tipo de página para validação de Schema: product, article, home ou generic'
+    required: false
+    default: 'generic'
+  min_score:
+    description: 'Nota mínima de SEO Score para aprovação do deploy (0 a 100)'
+    required: false
+    default: '80'
+  allow_bypass:
+    description: 'Forçar liberação do deploy mesmo com falhas críticas (true/false)'
+    required: false
+    default: 'false'
+
+outputs:
+  status_deploy:
+    description: 'Status final da decisão: APPROVED, REJECTED ou BYPASSED'
+  seo_score:
+    description: 'Pontuação final de SEO calculada (0 a 100)'
+  deploy_blocked:
+    description: 'Booleano indicando se o deploy deve ser abortado (true/false)'
+
+runs:
+  using: 'node20'
+  main: 'index.js'
